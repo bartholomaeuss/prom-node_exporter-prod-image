@@ -16,7 +16,7 @@ provide_container(){
     scp "${dockerfile}" "${user}@${remote}":"~/${dockerfile}"
     ssh -l "${user}" "${remote}" "docker kill \$(docker ps -q --filter ancestor=${image}:${tag})"
     ssh -l "${user}" "${remote}" "docker build -t ${image}:${tag} -f ./${dockerfile} ."
-    ssh -l "${user}" "${remote}" "docker run -d --net=host --pid=host -v /:/host:ro,rslave --restart=unless-stopped ${image}:${tag} --path.rootfs=/host"
+    ssh -l "${user}" "${remote}" "docker run -d --net=host --pid=host -v /:/host:ro --restart=unless-stopped ${image}:${tag} --path.rootfs=/host"
     exit 0
 }
 
